@@ -47,6 +47,14 @@ NODE_PATH=/tmp/google-ads-browser-check/node_modules CHROMIUM_PATH=/usr/bin/chro
 
 环境已提供 Playwright 时可直接使用已有模块路径。`CHROMIUM_PATH` 应指向实际安装的 Chromium/Chrome；未指定时优先使用 `/usr/bin/chromium`，否则使用 Playwright 已安装的浏览器。服务使用其他地址时，设置 `SITE_BASE_URL`。该检查通过 HTTP 运行，不代表已验证浏览器的 `file://` 存储兼容性。
 
+## GitHub Pages 部署
+
+仓库已包含 `.github/workflows/deploy-pages.yml`，将本目录直接发布为静态站点，无需构建或安装网站依赖。
+
+首次使用时，在 GitHub 仓库的 **Settings → Pages → Build and deployment → Source** 中选择 **GitHub Actions**。随后打开 **Actions → Deploy website to GitHub Pages → Run workflow** 执行首次部署。
+
+之后，推送到 `main` 的网站修改会自动触发部署。工作流成功后的实际访问地址显示在 `github-pages` 环境和部署步骤中。工作流已提交不代表部署已成功；请以成功的部署记录和实际页面访问为准。
+
 ## 原始项目开发参考
 
 下方保留原始 README 供取得完整源码后参考。其中的构建命令、目录和历史验证记录不代表当前离线版仓库的文件或验证结果。
