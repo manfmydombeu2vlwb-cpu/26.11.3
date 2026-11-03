@@ -1,3 +1,59 @@
+# Google Ads 投放判断手册 · 离线版
+
+这是可直接打开的静态网站成品，包含知识文章、全文搜索、投放诊断、周复盘和词语整理工具。个人实操分享，非 Google 官方文档。
+
+## 使用
+
+1. 下载并完整解压仓库，保持 `Google_Ads_Offline` 目录结构。
+2. 用 Chrome 或 Edge 打开本目录的 `index.html`。
+3. 无需安装 Node.js、npm 依赖或启动服务器；样式、交互代码和搜索索引均已内嵌。官方参考链接需要联网。
+
+可选的本地 HTTP 预览：在本目录运行以下命令，然后访问终端所示服务地址。
+
+```bash
+python3 -m http.server 8080
+```
+
+## 文件与维护
+
+- `index.html`：首页和投放诊断。
+- `map/`、`search/`、`video/`、`compliance/`：专题与文章。
+- `toolbox/`：指标、复盘、词语整理与实验工具。
+- `practice/`：搜索词、客户质量和回传练习。
+- `about/`、`404/`：关于与未找到页面。
+- `使用说明.txt`：离线版简明说明。
+
+本仓库当前没有原始 `content/`、`src/`、`public/`、`scripts/` 或 `package.json`，因此不能在此运行 `npm run build` 或 `npm run check`。直接修改 HTML 时，应同步所有页面的共用内嵌脚本，并验证搜索、移动菜单和本地记录功能。拿到完整源码后，应优先在源码中修改并重新生成离线版。
+
+## 本地记录
+
+记录保存在当前浏览器本地，不会上传到服务器。请定期使用 JSON 或 CSV 导出备份；更换浏览器、访问地址或移动离线文件后，旧记录可能无法直接读取。不要填写真实客户个人资料。
+
+## 浏览器回归检查
+
+仓库根目录的 `tests/browser-smoke.cjs` 覆盖搜索、诊断、搜索/视频复盘、词语工具、互动练习和阅读工具。它使用全新的浏览器上下文，不会读取个人浏览器记录。Playwright 仅供测试使用，网站运行不依赖它。
+
+先启动上面的本地 HTTP 服务。若测试环境尚未提供 Playwright，可将测试依赖安装在仓库外：
+
+```bash
+npm install --prefix /tmp/google-ads-browser-check playwright
+```
+
+然后在仓库根目录运行（示例使用系统 Chromium）：
+
+```bash
+NODE_PATH=/tmp/google-ads-browser-check/node_modules CHROMIUM_PATH=/usr/bin/chromium node tests/browser-smoke.cjs
+```
+
+环境已提供 Playwright 时可直接使用已有模块路径。`CHROMIUM_PATH` 应指向实际安装的 Chromium/Chrome；未指定时优先使用 `/usr/bin/chromium`，否则使用 Playwright 已安装的浏览器。服务使用其他地址时，设置 `SITE_BASE_URL`。该检查通过 HTTP 运行，不代表已验证浏览器的 `file://` 存储兼容性。
+
+## 原始项目开发参考
+
+下方保留原始 README 供取得完整源码后参考。其中的构建命令、目录和历史验证记录不代表当前离线版仓库的文件或验证结果。
+
+<details>
+<summary>展开原始源码项目 README（不适用于当前离线成品的安装与构建）</summary>
+
 # Google Ads 投放判断手册
 
 可搜索的 Google Ads 实操知识库、每周复盘工具与投放决策手册。个人实操分享，非 Google 官方文档。
@@ -236,3 +292,6 @@ content 增加可选字段：summary（白话解释）、steps（title/detail/re
 日期异常、无花费、花费与展示矛盾、搜索点击为零却有表单等数据口径问题，先于“等待成熟/积累样本”的提示。视频零观看及有展示但零覆盖会给出对应核对提示。金额精度按原始十进制表示校验，避免浮点容差接受多位小数；过小数值不会静默变为零。
 
 `npm run check` 现包含 360 组有效数据组合，验证指标有限、零分母不显示零成本、未完成跟进不生成完整合格率，以及预算测试与阻止提示不会同时出现。公式说明已修复异常文本，规则与存储版本分别显示和维护。
+
+
+</details>
